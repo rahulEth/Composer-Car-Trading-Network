@@ -1,0 +1,53 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * Write your model definitions here
+ */
+
+namespace org.tradenetwork
+
+asset Car identified by carId{
+   o String carId
+   o String model
+   o String VIN
+   o Make make
+   o Double price
+   --> Trader owner
+}
+
+enum Make{
+  o FORD
+  o CHEVY
+  o TESLA
+  o TOYOTA
+  o HONDA
+}
+
+participant Trader identified by traderId {
+   o String traderId
+   o Double balance default=0.00
+   o String firstName 
+   o String lastName
+} 
+  
+transaction Trade {
+   --> Trader newOwner
+   --> Trader oldOwner
+   --> Car car
+}  
+  
+event tradeNotification{
+    --> Car car  
+}
